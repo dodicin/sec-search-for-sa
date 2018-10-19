@@ -1,0 +1,13 @@
+{
+  "name": "pss_assignment1",
+  "version": "0.0.1",
+  "description": "",
+  "author": "Federico Bottoni, Nassim Habbash",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.16.1"
+  }
+}

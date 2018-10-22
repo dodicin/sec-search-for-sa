@@ -1,5 +1,7 @@
 0- install node
-1- run npm install
+1- docker build -t federicobottoni/node-web-app
+2- docker-compose build
+3- docker-compose up
 
 https://nodejs.org/en/docs/guides/nodejs-docker-webapp/
 https://docs.docker.com/docker-for-windows/kubernetes/

@@ -2,6 +2,7 @@
 
 This project consists of a distributed application set up to make use of different DevOps tools. 
 
+The application will let the user search for scientific articles against the database. 
 
 The core of the application is built on node.js, interfacing PostgreSQL for data management. Each environment which constitutes the webapp is going to be containerized with Docker.
 The containers are going to be orchestrated with Kubernetes, guaranteeing scalability in production environments.

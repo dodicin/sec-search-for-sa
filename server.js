@@ -16,5 +16,17 @@ app.get("/assets/style.css", function(req, res) {
   res.sendFile(__dirname + "/src/assets/style.css");
 });
 
+app.get("/api/article/:id", function(req, res) {
+  // PostegresSQL call
+  const module = require("./mock.js");
+  res.send(module.article[req.params.id]);
+});
+
+app.get("/api/articlesNames", function(req, res) {
+  // PostegresSQL call
+  const module = require("./mock.js");
+  res.send(module.articlesNames);
+});
+
 app.listen(PORT, HOST);
 console.log(`Running on http://${HOST}:${PORT}`);

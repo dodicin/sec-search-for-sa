@@ -7,3 +7,9 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8080:8080"
+  prometheus:
+    build:
+      context: ./prometheus
+      dockerfile: Dockerfile
+    ports:
+      - "9091:9090"

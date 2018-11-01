@@ -25,12 +25,12 @@ app.get("/assets/style.css", (req, res) => {
 });
 
 app.get("/api/article/:id", (req, res) => {
-  const { id } = req.param;
-  if (typeof id === "number") {
+  const { id } = req.params;
+  if (!isNaN(parseInt(id))) {
     client
       .query("SELECT * FROM articles WHERE id = $1", [id])
       .then(data => {
-        res.send(data.rows);
+        res.send(data.rows.length > 0 && data.rows[0]);
       })
       .catch(err => {
         console.log(err);

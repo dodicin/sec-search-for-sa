@@ -13,7 +13,7 @@
             axios.get("/api/articlesNames")
                 .then((res) => {
                     articlesNames = res.data;
-                    autocomplete(document.getElementById("autocompleteInput"), res.data.map((x) => x.title /*({ key: x.id, text: x.title })*/));
+                    autocomplete(document.getElementById("autocompleteInput"), res.data.map((x) => ({ key: x.id, text: x.title })));
                 })
                 .catch((err) => {
                     console.log(err);
@@ -21,15 +21,14 @@
         }
 
         const pullArticle = () => {
-            const autocompleteInput = document.getElementById("autocompleteInput");
-            const article = articlesNames && articlesNames.find((x) => { return x.title === autocompleteInput.value });
-            axios.get("/api/article/" + article.id)
+            const autocompleteInput = document.getElementById("autocompleteInputId").value;
+            axios.get("/api/article/" + autocompleteInput)
                 .then((res) => {
                     currentArticle = res.data;
                     document.getElementById("articleId").textContent = currentArticle.id;
                     document.getElementById("articleTitle").textContent = currentArticle.title;
-                    document.getElementById("articleText").textContent = currentArticle.text;
-                    document.getElementById("articleAuthors").textContent = currentArticle.authors;
+                    document.getElementById("articleText").textContent = currentArticle.description;
+                    document.getElementById("articleAuthors").textContent = currentArticle.author;
                 })
                 .catch((err) => {
                     console.log(err);
@@ -46,7 +45,7 @@
 
             <p>Article name:</p>
             <div class="autocomplete" style="width:300px;">
-                <!--<input id="autocompleteInputId" type="text" name="autocompleteInputId">-->
+                <input id="autocompleteInputId" type="hidden" name="autocompleteInputId">
                 <input id="autocompleteInput" type="text" name="autocompleteInput" placeholder="Article name">
             </div>
             <input type="submit" onClick="return pullArticle()">
@@ -75,13 +74,15 @@
                 a.setAttribute("class", "autocomplete-items");
                 this.parentNode.appendChild(a);
                 for (i = 0; i < arr.length; i++) {
-                    if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+                    if (arr[i].text.substr(0, val.length).toUpperCase() == val.toUpperCase()) {
                         b = document.createElement("DIV");
-                        b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
-                        b.innerHTML += arr[i].substr(val.length);
-                        b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
-                        b.addEventListener("click", (e) => {
+                        b.innerHTML = "<strong>" + arr[i].text.substr(0, val.length) + "</strong>";
+                        b.innerHTML += arr[i].text.substr(val.length);
+                        b.innerHTML += "<input type='hidden' value='" + arr[i].text + "'>";
+                        b.innerHTML += "<input type='hidden' value='" + arr[i].key + "'>";
+                        b.addEventListener("click", function (e) {
                             inp.value = this.getElementsByTagName("input")[0].value;
+                            document.getElementById("autocompleteInputId").value = this.getElementsByTagName("input")[1].value;
                             closeAllLists();
                         });
                         a.appendChild(b);
@@ -89,7 +90,7 @@
                 }
             });
             /*execute a presses a key on the keyboard:*/
-            inp.addEventListener("keydown", (e) => {
+            inp.addEventListener("keydown", function (e) {
                 var x = document.getElementById(this.id + "autocomplete-list");
                 if (x) x = x.getElementsByTagName("div");
                 if (e.keyCode == 40) {
@@ -140,7 +141,7 @@
                 }
             }
             /*execute a when someone clicks in the document:*/
-            document.addEventListener("click", (e) => {
+            document.addEventListener("click", function (e) {
                 closeAllLists(e.target);
             });
         }

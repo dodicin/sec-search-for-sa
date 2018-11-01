@@ -13,16 +13,13 @@ const client = new Client({
 });
 client.connect();
 
-// App
 const app = express();
 
-app.get("/", (req, res) => {
-  res.sendFile(__dirname + "/src/index.html");
-});
+app.listen(NODE_PORT, HOST);
 
-app.get("/assets/style.css", (req, res) => {
-  res.sendFile(__dirname + "/src/assets/style.css");
-});
+console.log(`Running on http://${HOST}:${NODE_PORT}`);
+
+// API
 
 app.get("/api/article/:id", (req, res) => {
   const { id } = req.params;
@@ -54,6 +51,16 @@ app.get("/api/articlesNames", (req, res) => {
     });
 });
 
-app.listen(NODE_PORT, HOST);
+// ROUTING
 
-console.log(`Running on http://${HOST}:${NODE_PORT}`);
+app.get("/", (req, res) => {
+  res.sendFile(__dirname + "/src/index.html");
+});
+
+app.get("/assets/style.css", (req, res) => {
+  res.sendFile(__dirname + "/src/assets/style.css");
+});
+
+app.get("/assets/autocomplete.js", (req, res) => {
+  res.sendFile(__dirname + "/src/assets/autocomplete.js");
+});

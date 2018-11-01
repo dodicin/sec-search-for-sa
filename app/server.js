@@ -1,16 +1,17 @@
 "use strict";
 
 const express = require("express");
-const pg = require("pg");
+const { Client } = require("pg");
 
 const NODE_PORT = 8080;
 const HOST = "0.0.0.0";
 
 const connString = "postgres://dbuser:dbpassword@db:5432/articlesdb";
 
-const client = new pg.Client({
+const client = new Client({
   connectionString: connString
 });
+client.connect();
 
 // App
 const app = express();
@@ -19,50 +20,37 @@ app.get("/", (req, res) => {
   res.sendFile(__dirname + "/src/index.html");
 });
 
-app.get("/assets/style.css", function(req, res) {
+app.get("/assets/style.css", (req, res) => {
   res.sendFile(__dirname + "/src/assets/style.css");
 });
 
-app.get("/api/article/:id", function(req, res) {
-  client
-    .connect()
-    .then(function() {
-      client.query(
-        "SELECT * FROM articles WHERE id = $1",
-        [req.params.id],
-        function(err, data) {
-          res.send(data.rows);
-          client.end();
-        }
-      );
-    })
-    .catch(function(err) {
-      console.error("could not connect to postgres:", err);
-      client.end();
-      res.sendStatus(500);
-    });
+app.get("/api/article/:id", (req, res) => {
+  const { id } = req.param;
+  if (typeof id === "number") {
+    client
+      .query("SELECT * FROM articles WHERE id = $1", [id])
+      .then(data => {
+        res.send(data.rows);
+      })
+      .catch(err => {
+        console.log(err);
+        res.sendStatus(500);
+      });
+  } else {
+    console.log("id type is not number");
+    res.sendStatus(500);
+  }
 });
 
-app.get("/api/articlesNames", function(req, res) {
+app.get("/api/articlesNames", (req, res) => {
   client
-    .connect()
-    .then(function() {
-      return client
-        .query("SELECT id, title FROM articles")
-        .then(function(data) {
-          res.send(data.rows);
-          client.end();
-        })
-        .catch(function(err) {
-          console.log(err);
-          client.end();
-          return res.sendStatus(500);
-        });
+    .query("SELECT id, title FROM articles")
+    .then(data => {
+      res.send(data.rows);
     })
-    .catch(function(err) {
-      console.error("could not connect to postgres:", err);
-      client.end();
-      return res.sendStatus(500);
+    .catch(err => {
+      console.log(err);
+      res.sendStatus(500);
     });
 });
 

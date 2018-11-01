@@ -1,13 +1,56 @@
-0- install node
-1- docker build -t federicobottoni/node-web-app
-2- docker-compose build
-3- docker-compose up
+# [Processo e Sviluppo del Software] - Assignment 1
 
-https://nodejs.org/en/docs/guides/nodejs-docker-webapp/
-https://docs.docker.com/docker-for-windows/kubernetes/
-https://node-postgres.com/features/connecting
-https://prometheus.io/docs/visualization/grafana/#grafana-support-for-prometheus
-https://stackoverflow.com/questions/43999394/prometheus-how-to-monitor-other-docker-containers
+This project consists of a distributed application set up to make use of different DevOps tools. 
 
-Federico Bottoni 806944, Nassim Habbash 808292
-L'applicativo consiste in una webapp in Node.js con database PostgreSQL i cui ambienti sono containerizzati con Docker, orchestrati con Kubernetes e monitorati da Prometheus supportato da Grafana. Il sistema soddisfa i requisiti di Containerization, Provisioning e Monitoring.
+The application will let the user search for scientific articles against the database. 
+
+The core of the application is built on node.js, interfacing PostgreSQL for data management. Each environment which constitutes the webapp is going to be containerized with Docker.
+The containers are going to be orchestrated with Kubernetes, guaranteeing scalability in production environments.
+The system will be monitored through the joint use of Prometheus and Grafana.
+
+The system will hence satisfy the requirements of Containerization, Provisioning and Monitoring requested by the assignment.
+
+## Getting Started
+
+```
+git clone https://gitlab.com/FedericoBottoni/pss-assignment1
+TODO the rest
+```
+
+### Prerequisites
+
+Requirements:
+```
+node.js
+postgresql
+docker
+docker-compose
+prometheus
+grafana
+```
+## Running
+
+Ex.
+```
+Launch generic services
+Launch containers
+Launch monitoring
+```
+
+The application is testable from `localhost:8080` after everything has been launched
+
+
+
+
+## Authors
+
+* **Federico Bottoni** - *806944* 
+* **Nassim Habbash** - *808292* 
+
+## License
+
+This project is licensed under the MIT License.
+
+## Acknowledgments
+
+* Thanks Jojo for the cool poses

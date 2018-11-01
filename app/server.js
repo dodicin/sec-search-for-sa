@@ -1,13 +1,18 @@
 "use strict";
 
 const express = require("express");
+//const pg = require("pg");
 
 // Constants
 const PORT = 8080;
 const HOST = "0.0.0.0";
 
+// DB
+//pg.connect('postgres://dbuser:dbpassword@localhost:5432');
+
 // App
 const app = express();
+
 app.get("/", (req, res) => {
   res.sendFile(__dirname + "/src/index.html");
 });

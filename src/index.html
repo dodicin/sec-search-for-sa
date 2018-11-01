@@ -9,7 +9,7 @@
     <script>
         let currentArticle;
         let articlesNames;
-        const getArticles = function (element) {
+        const getArticles = function () {
             axios.get("/api/articlesNames")
                 .then(function (res) {
                     articlesNames = res.data;

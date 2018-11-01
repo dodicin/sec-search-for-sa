@@ -32,14 +32,15 @@ app.get("/api/article/:id", function(req, res) {
         [req.params.id],
         function(err, data) {
           res.send(data.rows);
+          client.end();
         }
       );
     })
     .catch(function(err) {
       console.error("could not connect to postgres:", err);
+      client.end();
       res.sendStatus(500);
     });
-  client.end();
 });
 
 app.get("/api/articlesNames", function(req, res) {
@@ -47,20 +48,21 @@ app.get("/api/articlesNames", function(req, res) {
     .connect()
     .then(function() {
       return client
-        .query("SELECT title FROM articles")
+        .query("SELECT id, title FROM articles")
         .then(function(data) {
           res.send(data.rows);
+          client.end();
         })
         .catch(function(err) {
           console.log(err);
+          client.end();
+          return res.sendStatus(500);
         });
     })
     .catch(function(err) {
       console.error("could not connect to postgres:", err);
-      res.sendStatus(500);
-    })
-    .then(function() {
       client.end();
+      return res.sendStatus(500);
     });
 });
 

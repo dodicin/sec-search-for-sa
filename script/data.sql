@@ -60,7 +60,7 @@ INSERT INTO articles VALUES
         Everyone was busy, so I went to the movie alone.
         Check back tomorrow; I will see if the book has arrived.
         The quick brown fox jumps over the lazy dog.
-        A glittering gem is not enough.');
+        A glittering gem is not enough.'),
     (5, 'Test another article', 'Foo bar author', 'We need to rent a room for our party.
         She borrowed the book from him many years ago and has not yet returned it.
         She did not cheat on the test, for it was not the right thing to do.

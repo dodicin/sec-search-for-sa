@@ -26,10 +26,10 @@
             axios.get("/api/article/" + autocompleteInput)
                 .then((res) => {
                     currentArticle = res.data;
-                    document.getElementById("articleId").textContent = currentArticle.id;
+                    document.getElementById("articleId").textContent = 'Id: ' + currentArticle.id;
                     document.getElementById("articleTitle").textContent = currentArticle.title;
                     document.getElementById("articleText").textContent = currentArticle.description;
-                    document.getElementById("articleAuthors").textContent = currentArticle.author;
+                    document.getElementById("articleAuthors").textContent = 'Authors: ' + currentArticle.author;
                 })
                 .catch((err) => {
                     console.log(err);
@@ -55,7 +55,7 @@
 
             <h6 style="padding: 8px" id="articleId"></h6>
             <h1 style="padding: 8px" id="articleTitle"></h1>
-            <h3 style="padding: 8px" id="articleText"></h3>
+            <h3 style="padding: 8px; font-weight: 500" id="articleText"></h3>
             <h2 style="padding: 8px" id="articleAuthors"></h2>
         </div>
     </div>

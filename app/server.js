@@ -3,7 +3,7 @@
 const express = require("express");
 const { Client } = require("pg");
 
-const NODE_PORT = 8080;
+const NODE_PORT = 1010;
 const HOST = "0.0.0.0";
 
 const connString = "postgres://dbuser:dbpassword@db:5432/articlesdb";

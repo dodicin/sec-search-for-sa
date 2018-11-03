@@ -34,7 +34,7 @@ services:
       - POSTGRES_PASSWORD=dbpassword
       - PGDATA=/tmp
     ports:
-      - "5432:5432"
+      - 5432:5432
 
   prometheus:
     container_name: prometheus

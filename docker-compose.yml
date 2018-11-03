@@ -12,23 +12,76 @@ services:
     links:
       - db
     ports:
-      - "8080:8080"
+      - 8080:8080
+
+
   db:
     container_name: db
     image: postgres
     restart: always
     volumes:
-      - ./data/postgres:/var/lib/postgresql/data
+      - db_data:/var/lib/postgresql/data
     environment:
       - POSTGRES_DB=articlesdb
       - POSTGRES_USER=dbuser 
       - POSTGRES_PASSWORD=dbpassword
     ports:
       - "5432:5432"
-  prometheus:
-    build:
-      context: ./prometheus
-      dockerfile: Dockerfile
-    ports:
-      - "9091:9090"
 
+
+  prometheus:
+    container_name: prometheus
+    image: prom/prometheus:latest
+    #build:
+    #  context: ./prometheus
+    #  dockerfile: Dockerfile
+    ports:
+      - 9090:9090
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus_data:/etc/prometheus/
+      - prometheus_data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+      - '--storage.tsdb.retention=200h'
+      - '--web.enable-lifecycle'
+    depends_on:
+      - cadvisor
+
+
+  cadvisor:
+    image: google/cadvisor:latest
+    container_name: cadvisor
+    ports:
+      - 7070:8080
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:rw
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+    depends_on:
+      - db
+
+
+  grafana:
+   container_name: grafana
+   image: grafana/grafana:latest
+   volumes:
+    - grafana_data:/var/lib/grafana
+   environment:
+     - GF_SECURITY_ADMIN_USER=${ADMIN_USER:-admin}
+     - GF_SECURITY_ADMIN_PASSWORD=${ADMIN_PASSWORD:-admin}
+     - GF_USERS_ALLOW_SIGN_UP=false
+   restart: unless-stopped
+   expose:
+     - 3000
+   ports:
+     - 3000:3000
+
+volumes:
+  grafana_data: {}
+  prometheus_data: {}
+  db_data: {}

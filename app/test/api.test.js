@@ -1,36 +1,45 @@
 const axios = require("axios");
 
 test("articlesNames call: API returns not-empty data", () => {
-  axios
+  expect.assertions(1);
+  return axios
     .get("/api/articlesNames")
     .then(res => {
       expect(res.data && res.data.length).toBeGreaterThan(0);
     })
-    .catch(err => {});
+    .catch(err => {
+      expect(err).toBe(null);
+    });
 });
 
 test("articlesNames call: articles have an id and a title", () => {
-  axios
+  expect.assertions(1);
+  return axios
     .get("/api/articlesNames")
     .then(res => {
       expect(res.data.filter(x => !x.id || !x.title).length).toBe(0);
     })
-    .catch(err => {});
+    .catch(err => {
+      expect(err).toBe(null);
+    });
 });
 
 test("article call: API returns not-empty data", () => {
-  axios
-    .get("/api/article/:id")
+  expect.assertions(1);
+  return axios
+    .get("/api/article/1")
     .then(res => {
-      console.log(res);
-      expect(res.data).toBe(0);
+      expect(res.data).not.toBe(null);
     })
-    .catch(err => {});
+    .catch(err => {
+      expect(err).toBe(null);
+    });
 });
 
 test("article call: article attributes", () => {
-  axios
-    .get("/api/article/:id")
+  expect.assertions(1);
+  return axios
+    .get("/api/article/1")
     .then(res => {
       expect(Object.keys(res.data)).arrayContaining([
         "id",
@@ -39,5 +48,7 @@ test("article call: article attributes", () => {
         "description"
       ]);
     })
-    .catch(err => {});
+    .catch(err => {
+      expect(err).toBe(null);
+    });
 });

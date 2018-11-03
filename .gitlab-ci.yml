@@ -14,7 +14,7 @@ install_docker:
   image: docker:stable
   before_script:
     - apk add --no-cache py-pip
-    - pip install docker-compose 
+    - pip install docker-compose
     - docker info
     - docker-compose --version
     - docker volume create --name=pgdata
@@ -28,7 +28,7 @@ test:
   image: docker:stable
   before_script:
     - apk add --no-cache py-pip
-    - pip install docker-compose 
+    - pip install docker-compose
     - docker info
     - docker-compose --version
     - docker volume create --name=pgdata
@@ -40,7 +40,7 @@ test:
     - docker-compose run
     - cd app
     - npm test
-    . cd ..
+    - cd ..
   only:
     - master
   dependencies:

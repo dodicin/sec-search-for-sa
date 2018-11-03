@@ -1,7 +1,21 @@
-before_script:
-  - npm install,
-  - npm run test
+image: node:8
 
-test:
+cache:
+  paths:
+    - node_modules/
+    - .yarn
+
+before_script:
+  - npm update
+
+# You specify the stages. Those are the steps that GitLab will go through
+# Order matters.
+stages:
+  - test
+
+Test:
+  stage: test
+  tags:
+    - node
   script:
     - npm run test

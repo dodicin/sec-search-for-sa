@@ -1,0 +1,7 @@
+before_script:
+  - npm install,
+  - npm run test
+
+test:
+  script:
+    - npm run test

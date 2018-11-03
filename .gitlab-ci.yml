@@ -17,7 +17,6 @@ install_docker:
     - pip install docker-compose
     - docker info
     - docker-compose --version
-    - docker volume create --name=pgdata
   script:
     - docker-compose -f docker-compose.yml build
   only:
@@ -31,16 +30,13 @@ test:
     - pip install docker-compose
     - docker info
     - docker-compose --version
-    - docker volume create --name=pgdata
+    - docker-compose -f docker-compose.yml build
     - apk --update add nodejs nodejs-npm
-    - cd ./app
+    - docker-compose up -d
+    - cd app+
     - npm install
-    - cd ..
   script:
-    - docker-compose run
-    - cd app
     - npm test
-    - cd ..
   only:
     - master
   dependencies:

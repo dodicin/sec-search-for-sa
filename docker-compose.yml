@@ -12,9 +12,16 @@ services:
     links:
       - db
     ports:
-      - 8080:8080
-
-
+      - 1010:1010
+    environment:
+      DATABASE_URL: postgres://dbuser:dbpassword@db:5432/articlesdb
+      #- PGHOST=db
+      #- PGPORT=5432
+      #- PGUSER=dbuser
+      #- PGPASSWORD=dbpassword
+      #- PGDATABASE=articlesdb
+      #- NODE_ENV=development
+  
   db:
     container_name: db
     image: postgres
@@ -23,11 +30,11 @@ services:
       - db_data:/var/lib/postgresql/data
     environment:
       - POSTGRES_DB=articlesdb
-      - POSTGRES_USER=dbuser 
+      - POSTGRES_USER=dbuser
       - POSTGRES_PASSWORD=dbpassword
+      - PGDATA=/tmp
     ports:
       - "5432:5432"
-
 
   prometheus:
     container_name: prometheus
@@ -51,7 +58,6 @@ services:
     depends_on:
       - cadvisor
 
-
   cadvisor:
     image: google/cadvisor:latest
     container_name: cadvisor
@@ -64,7 +70,6 @@ services:
       - /var/lib/docker/:/var/lib/docker:ro
     depends_on:
       - db
-
 
   grafana:
    container_name: grafana

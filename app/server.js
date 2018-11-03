@@ -1,37 +1,66 @@
 "use strict";
 
 const express = require("express");
-//const pg = require("pg");
+const { Client } = require("pg");
 
-// Constants
-const PORT = 8080;
+const NODE_PORT = 8080;
 const HOST = "0.0.0.0";
 
-// DB
-//pg.connect('postgres://dbuser:dbpassword@localhost:5432');
+const connString = "postgres://dbuser:dbpassword@db:5432/articlesdb";
 
-// App
+const client = new Client({
+  connectionString: connString
+});
+client.connect();
+
 const app = express();
+
+app.listen(NODE_PORT, HOST);
+
+console.log(`Running on http://${HOST}:${NODE_PORT}`);
+
+// API
+
+app.get("/api/article/:id", (req, res) => {
+  const { id } = req.params;
+  if (!isNaN(parseInt(id))) {
+    client
+      .query("SELECT * FROM articles WHERE id = $1", [id])
+      .then(data => {
+        res.send(data.rows.length > 0 && data.rows[0]);
+      })
+      .catch(err => {
+        console.log(err);
+        res.sendStatus(500);
+      });
+  } else {
+    console.log("id type is not number");
+    res.sendStatus(500);
+  }
+});
+
+app.get("/api/articlesNames", (req, res) => {
+  client
+    .query("SELECT id, title FROM articles")
+    .then(data => {
+      res.send(data.rows);
+    })
+    .catch(err => {
+      console.log(err);
+      res.sendStatus(500);
+    });
+});
+
+// ROUTING
 
 app.get("/", (req, res) => {
   res.sendFile(__dirname + "/src/index.html");
 });
 
-app.get("/assets/style.css", function(req, res) {
+app.get("/assets/style.css", (req, res) => {
   res.sendFile(__dirname + "/src/assets/style.css");
 });
 
-app.get("/api/article/:id", function(req, res) {
-  // PostegresSQL call
-  const module = require("./mock.js");
-  res.send(module.article[req.params.id]);
+app.get("/assets/autocomplete.js", (req, res) => {
+  res.sendFile(__dirname + "/src/assets/autocomplete.js");
 });
-
-app.get("/api/articlesNames", function(req, res) {
-  // PostegresSQL call
-  const module = require("./mock.js");
-  res.send(module.articlesNames);
-});
-
-app.listen(PORT, HOST);
-console.log(`Running on http://${HOST}:${PORT}`);

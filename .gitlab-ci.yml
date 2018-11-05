@@ -33,7 +33,7 @@ test:
     - docker-compose -f docker-compose.yml build
     - apk --update add nodejs nodejs-npm
   script:
-    - docker run -rm app npm test
+    - docker-compose run --rm app npm test
   only:
     - master
   dependencies:

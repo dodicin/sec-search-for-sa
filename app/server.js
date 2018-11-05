@@ -58,6 +58,10 @@ app.get("/assets/style.css", (req, res) => {
   res.sendFile(__dirname + "/src/assets/style.css");
 });
 
+app.get("/assets/logo.png", (req, res) => {
+  res.sendFile(__dirname + "/src/assets/logo.png");
+});
+
 app.get("/assets/autocomplete.js", (req, res) => {
   res.sendFile(__dirname + "/src/assets/autocomplete.js");
 });

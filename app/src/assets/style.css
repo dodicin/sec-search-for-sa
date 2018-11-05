@@ -59,3 +59,17 @@ input[type="submit"] {
   background-color: DodgerBlue !important;
   color: #ffffff;
 }
+
+.container{
+  text-align: center;
+  display: flex; 
+  flex-direction: column; 
+  justify-content: center;
+}
+
+#logo {
+  object-fit: contain;
+}
+
+.btn_submit {
+}

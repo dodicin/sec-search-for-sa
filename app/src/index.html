@@ -40,24 +40,22 @@
 </head>
 
 <body>
-    <div style="display: flex; flex-direction: row;">
-        <div style="width: 20%">
-            <h2>Scientific articles search engine</h2>
-
-            <p>Article name:</p>
-            <div class="autocomplete" style="width:300px;">
-                <input id="autocompleteInputId" type="hidden" name="autocompleteInputId">
-                <input id="autocompleteInput" type="text" name="autocompleteInput" placeholder="Article name">
-            </div>
-            <input type="submit" onClick="return pullArticle()">
+    <div class="container">
+        
+        <img id="logo" src="assets/logo.png">
+        <div class="autocomplete">
+            <input id="autocompleteInputId" type="hidden" name="autocompleteInputId">
+            <input id="autocompleteInput" type="text" name="autocompleteInput" placeholder="Article name">
         </div>
-        <div style="width: 80%; padding: 32px">
+        <input class="btn_submit" type="submit" onClick="return pullArticle()">
+        <br>
+    </div>
+    <div class="container">
 
-            <h6 style="padding: 8px" id="articleId"></h6>
-            <h1 style="padding: 8px" id="articleTitle"></h1>
-            <h3 style="padding: 8px; font-weight: 500" id="articleText"></h3>
-            <h2 style="padding: 8px" id="articleAuthors"></h2>
-        </div>
+        <h6 style="padding: 8px" id="articleId"></h6>
+        <h1 style="padding: 8px" id="articleTitle"></h1>
+        <h3 style="padding: 8px; font-weight: 500" id="articleText"></h3>
+        <h2 style="padding: 8px" id="articleAuthors"></h2>
     </div>
 
 

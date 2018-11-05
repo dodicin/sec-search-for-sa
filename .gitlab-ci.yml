@@ -30,7 +30,6 @@ test:
     - pip install docker-compose
     - docker info
     - docker-compose --version
-    - docker-compose -f docker-compose.yml build
     - apk --update add nodejs nodejs-npm
   script:
     - docker-compose run --rm app npm test

@@ -10,9 +10,6 @@ const pool = new Pool();
 pool.connect();
 
 const app = express();
-
-app.listen(NODE_PORT, HOST);
-
 console.log(`Running on http://${HOST}:${NODE_PORT}`);
 
 // API
@@ -30,13 +27,11 @@ app.get("/api/article/:id", (req, res) => {
         res.sendStatus(500);
       });
   } else {
-    console.log("id type is not number");
     res.sendStatus(500);
   }
 });
 
 app.get("/api/articlesNames", (req, res) => {
-  console.log("req", req);
   pool
     .query("SELECT id, title FROM articles")
     .then(data => {
@@ -66,4 +61,6 @@ app.get("/assets/autocomplete.js", (req, res) => {
   res.sendFile(__dirname + "/src/assets/autocomplete.js");
 });
 
-module.exports = app;
+module.exports = app.listen(NODE_PORT, () => {
+  console.log("Listening on port", NODE_PORT);
+});

@@ -41,23 +41,25 @@
 
 <body>
     <div class="container">
-        
+
         <img id="logo" src="assets/logo.png">
-        <div class="autocomplete">
-            <input id="autocompleteInputId" type="hidden" name="autocompleteInputId">
-            <input id="autocompleteInput" type="text" name="autocompleteInput" placeholder="Article name">
+    </div>
+    <div style="display: flex; flex-direction: row">
+        <div style="width:20%">
+            <div class="autocomplete">
+                <input id="autocompleteInputId" type="hidden" name="autocompleteInputId">
+                <input id="autocompleteInput" type="text" name="autocompleteInput" placeholder="Article name">
+            </div>
+            <input class="btn_submit" type="submit" onClick="return pullArticle()">
+            <br>
         </div>
-        <input class="btn_submit" type="submit" onClick="return pullArticle()">
-        <br>
+        <div style="width:80%">
+            <h6 style="padding: 8px" id="articleId"></h6>
+            <h1 style="padding: 8px" id="articleTitle"></h1>
+            <h3 style="padding: 8px; font-weight: 500" id="articleText"></h3>
+            <h2 style="padding: 8px" id="articleAuthors"></h2>
+        </div>
     </div>
-    <div class="container">
-
-        <h6 style="padding: 8px" id="articleId"></h6>
-        <h1 style="padding: 8px" id="articleTitle"></h1>
-        <h3 style="padding: 8px; font-weight: 500" id="articleText"></h3>
-        <h2 style="padding: 8px" id="articleAuthors"></h2>
-    </div>
-
 
 
     <script>

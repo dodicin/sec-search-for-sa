@@ -1,3 +1,11 @@
+CREATE TABLE IF NOT EXISTS articles (
+    id int,
+	title text NOT NULL,
+	author text NULL,
+	description text NULL,
+	PRIMARY KEY(id)
+);
+
 INSERT INTO articles VALUES
     (1, 'Example', 'Federico Bottoni', 'Example of a scientific article.'),
     (2, 'Testing ', 'Nassim Habbash', 'Another example of a scientific article.'),

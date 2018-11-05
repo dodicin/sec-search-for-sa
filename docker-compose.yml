@@ -25,6 +25,7 @@ services:
   db:
     container_name: db
     image: postgres
+    build: "./db"
     restart: always
     volumes:
       - db_data:/var/lib/postgresql/data
@@ -68,7 +69,7 @@ services:
     depends_on:
       - db
       - app
-      
+
   grafana:
     container_name: grafana
     image: grafana/grafana:latest
@@ -78,7 +79,7 @@ services:
       - GF_SECURITY_ADMIN_USER=${ADMIN_USER:-admin}
       - GF_SECURITY_ADMIN_PASSWORD=${ADMIN_PASSWORD:-admin}
       - GF_USERS_ALLOW_SIGN_UP=false
-    restart: always 
+    restart: always
     expose:
       - 3000
     ports:

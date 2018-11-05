@@ -1,17 +1,13 @@
 "use strict";
 
 const express = require("express");
-const { Client } = require("pg");
+const { Pool } = require("pg");
 
 const NODE_PORT = 1010;
 const HOST = "0.0.0.0";
 
-const connString = "postgres://dbuser:dbpassword@db:5432/articlesdb";
-
-const client = new Client({
-  connectionString: connString
-});
-client.connect();
+const pool = new Pool();
+pool.connect();
 
 const app = express();
 
@@ -24,7 +20,7 @@ console.log(`Running on http://${HOST}:${NODE_PORT}`);
 app.get("/api/article/:id", (req, res) => {
   const { id } = req.params;
   if (!isNaN(parseInt(id))) {
-    client
+    pool
       .query("SELECT * FROM articles WHERE id = $1", [id])
       .then(data => {
         res.send(data.rows.length > 0 && data.rows[0]);
@@ -40,7 +36,8 @@ app.get("/api/article/:id", (req, res) => {
 });
 
 app.get("/api/articlesNames", (req, res) => {
-  client
+  console.log("req", req);
+  pool
     .query("SELECT id, title FROM articles")
     .then(data => {
       res.send(data.rows);
@@ -64,3 +61,5 @@ app.get("/assets/style.css", (req, res) => {
 app.get("/assets/autocomplete.js", (req, res) => {
   res.sendFile(__dirname + "/src/assets/autocomplete.js");
 });
+
+module.exports = app;

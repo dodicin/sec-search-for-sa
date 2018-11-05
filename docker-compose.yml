@@ -14,13 +14,13 @@ services:
     ports:
       - 1010:1010
     environment:
-      DATABASE_URL: postgres://dbuser:dbpassword@db:5432/articlesdb
-      #- PGHOST=db
-      #- PGPORT=5432
-      #- PGUSER=dbuser
-      #- PGPASSWORD=dbpassword
-      #- PGDATABASE=articlesdb
-      #- NODE_ENV=development
+      #DATABASE_URL: postgres://dbuser:dbpassword@db:5432/articlesdb
+      - PGHOST=db
+      - PGPORT=5432
+      - PGUSER=dbuser
+      - PGPASSWORD=dbpassword
+      - PGDATABASE=articlesdb
+      - NODE_ENV=development
 
   db:
     container_name: db

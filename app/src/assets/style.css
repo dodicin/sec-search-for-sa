@@ -20,11 +20,6 @@ input {
   font-size: 16px;
 }
 
-input[type="text"] {
-  /*background-color: #f1f1f1;*/
-  width: 100%;
-}
-
 input[type="submit"] {
   background-color: DodgerBlue;
   color: #fff;
@@ -60,6 +55,13 @@ input[type="submit"] {
   color: #ffffff;
 }
 
+.container-row{
+  text-align: center;
+  display: flex; 
+  flex-direction: row; 
+  justify-content: center;
+}
+
 .container{
   text-align: center;
   display: flex; 
@@ -67,9 +69,18 @@ input[type="submit"] {
   justify-content: center;
 }
 
+.search{
+  width: 35%;
+}
+
+#autocompleteInput{
+  width: 97%;
+}
+
 #logo {
   object-fit: contain;
 }
 
 .btn_submit {
+  width:20%;
 }

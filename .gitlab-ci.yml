@@ -21,6 +21,7 @@ install_docker:
     - docker-compose -f docker-compose.yml build
   only:
     - master
+    - dev
 
 test:
   stage: test
@@ -35,5 +36,6 @@ test:
     - docker-compose run --rm app npm test
   only:
     - master
+    - dev
   dependencies:
     - install_docker
